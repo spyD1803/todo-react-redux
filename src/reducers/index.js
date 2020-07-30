@@ -7,7 +7,11 @@ const INITIAL_STATE = {
 const todoReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actionTypes.UPDATING: {
-      return { ...state, updating: true };
+      return { ...state, updating: true, error: "" };
+    }
+
+    case actionTypes.ERROR: {
+      return { ...state, updating: false, error: action.payload };
     }
 
     case actionTypes.ADD_TODOS: {

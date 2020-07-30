@@ -9,10 +9,12 @@ function App(props) {
   const [updateId, setUpdateId] = useState(null);
 
   const onAddItemPress = () => {
-    if (updateId) {
-      props.updateTodo(updateId, { title: todo });
-    } else {
-      props.addTodo(todo);
+    if (todo) {
+      if (updateId) {
+        props.updateTodo(updateId, { title: todo });
+      } else {
+        props.addTodo(todo);
+      }
     }
     setUpdateId(null);
     setTodo("");
@@ -42,6 +44,11 @@ function App(props) {
           Add Item
         </button>
       </div>
+      {props.error ? (
+        <p style={{ color: "red", fontSize: 12 }}>
+          Something went wrong. Please try again
+        </p>
+      ) : null}
       <TodoList onTodoUpdate={onTodoUpdate} />
     </div>
   );
@@ -49,6 +56,7 @@ function App(props) {
 
 const mapStateToProps = (state) => ({
   todos: state,
+  error: state.error,
 });
 
 export default connect(mapStateToProps, { addTodo, updateTodo })(App);
